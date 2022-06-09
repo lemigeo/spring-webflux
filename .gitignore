@@ -6,3 +6,4 @@ spring-webflux/gradle.properties
 spring-webflux/gradlew
 spring-webflux/gradlew.bat
 spring-webflux/settings.gradle.kts
+spring-webflux/application.properties
