@@ -23,9 +23,15 @@ class AccountController(private val service: AccountService) {
         return service.list()
     }
 
-    @PostMapping("/account", consumes = ["application/json"])
-    @ResponseStatus(HttpStatus.CREATED)
-    fun post(@RequestBody account: AccountData) {
-        println(account)
+    @PostMapping("/account", consumes = ["application/json"], produces = ["application/json"])
+    @ResponseBody
+    fun post(@RequestBody account: Account): Mono<Account> {
+        return service.add(account)
+    }
+
+    @PutMapping("/account", consumes = ["application/json"], produces = ["application/json"])
+    @ResponseBody
+    fun put(@RequestBody account: Account): Mono<Account> {
+        return service.update(account)
     }
 }

@@ -7,12 +7,23 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class AccountService(private val repository: AccountRepository) {
+class AccountService(private val repo: AccountRepository) {
     fun get(id: String): Mono<Account> {
-        return repository.findById(id)
+        return repo.findById(id)
     }
 
     fun list(): Flux<Account> {
-        return repository.findAll()
+        return repo.findAll()
+    }
+
+    fun add(account: Account): Mono<Account> {
+        return repo.save(account)
+    }
+
+    fun update(account: Account): Mono<Account> {
+        return repo.findById(account.id).flatMap {
+            it.name = account.name
+            repo.save(it)
+        }
     }
 }

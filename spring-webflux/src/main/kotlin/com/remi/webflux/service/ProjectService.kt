@@ -7,12 +7,12 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class ProjectService(private val repository: ProjectRepository) {
+class ProjectService(private val repo: ProjectRepository) {
     fun get(id: String): Mono<Project> {
-        return repository.findTop1ById(id)
+        return repo.findById(id)
     }
 
     fun list(): Flux<Project> {
-        return repository.findAll()
+        return repo.findAll()
     }
 }
