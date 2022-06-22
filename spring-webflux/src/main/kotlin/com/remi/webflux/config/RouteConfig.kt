@@ -17,12 +17,12 @@ class RouteConfig {
         return RouterFunctions.route()
             .path("/project") { builder ->
                 builder
-                    .GET("/project/{id}") { request -> handler.get(request) }
-                    .GET("/project") { request -> handler.list(request) }
+                    .GET("/{id}") { request -> handler.get(request) }
+                    .GET("") { request -> handler.list(request) }
                     .nest(accept(MediaType.APPLICATION_JSON)) { jsonBuilder ->
                         jsonBuilder
-                            .POST("/project", accept(MediaType.APPLICATION_JSON), handler::create)
-                            .PUT("/project", accept(MediaType.APPLICATION_JSON), handler::update)
+                            .POST("", accept(MediaType.APPLICATION_JSON), handler::create)
+                            .PUT("", accept(MediaType.APPLICATION_JSON), handler::update)
                     }
             }.build()
     }

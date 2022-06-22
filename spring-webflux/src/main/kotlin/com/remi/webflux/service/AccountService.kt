@@ -5,6 +5,7 @@ import com.remi.webflux.repository.AccountRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.util.*
 
 @Service
 class AccountService(private val repo: AccountRepository) {
@@ -21,7 +22,7 @@ class AccountService(private val repo: AccountRepository) {
     }
 
     fun update(account: Account): Mono<Account> {
-        return repo.findById(account.id).flatMap {
+        return repo.findById(account.id!!).flatMap {
             it.name = account.name
             repo.save(it)
         }

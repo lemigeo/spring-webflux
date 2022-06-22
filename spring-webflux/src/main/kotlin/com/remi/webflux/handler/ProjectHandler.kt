@@ -25,7 +25,14 @@ class ProjectHandler(private val service: ProjectService) {
 
     fun list(request: ServerRequest) : Mono<ServerResponse> {
         val projects = service.list()
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(projects)
+        return projects.hasElements().flatMap {
+            if(it) {
+                ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(projects)
+            }
+            else {
+                ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(Mono.just(ArrayList<Project>()))
+            }
+        }
     }
 
     fun create(request: ServerRequest) : Mono<ServerResponse> {
