@@ -1,5 +1,6 @@
 package com.remi.webflux.domain
 
+import org.springframework.data.domain.Persistable
 import javax.persistence.*
 
 @Entity
@@ -8,7 +9,7 @@ class Project (
     @Id
     @org.springframework.data.annotation.Id
     @Column(name = "id")
-    var id: String? = null,
+    private var id: String? = null,
 
     @Column(name = "name")
     var name: String? = null,
@@ -16,7 +17,18 @@ class Project (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seq")
     var seq: Long? = null
-) {
+): Persistable<String> {
+    override fun getId(): String? {
+        return this.id
+    }
+
+    fun setId(value: String?) {
+        this.id = value
+    }
+
+    override fun isNew(): Boolean {
+        return this.seq === null
+    }
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

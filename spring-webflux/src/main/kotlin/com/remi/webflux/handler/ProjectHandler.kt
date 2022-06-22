@@ -36,12 +36,18 @@ class ProjectHandler(private val service: ProjectService) {
     }
 
     fun create(request: ServerRequest) : Mono<ServerResponse> {
-        val project = request.bodyToMono<ProjectData>()
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValue({})
+        val project = request.bodyToMono<Project>()
+        val result = project.flatMap {
+            service.add(it)
+        }
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(result)
     }
 
     fun update(request: ServerRequest) : Mono<ServerResponse> {
-        val project = request.bodyToMono<ProjectData>()
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValue({})
+        val project = request.bodyToMono<Project>()
+        val result = project.flatMap {
+            service.update(it)
+        }
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(result)
     }
 }
