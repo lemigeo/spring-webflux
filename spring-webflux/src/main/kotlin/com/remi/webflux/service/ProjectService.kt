@@ -1,5 +1,6 @@
 package com.remi.webflux.service
 
+import com.remi.webflux.data.ProjectData
 import com.remi.webflux.domain.Account
 import com.remi.webflux.domain.Project
 import com.remi.webflux.repository.ProjectRepository
@@ -13,8 +14,10 @@ class ProjectService(private val repo: ProjectRepository) {
         return repo.findById(id)
     }
 
-    fun list(): Flux<Project> {
-        return repo.findAll()
+    fun list(): Flux<ProjectData> {
+        return repo.findAll().flatMap {
+            Mono.just(ProjectData(it.id, it.name))
+        }
     }
 
     fun add(project: Project): Mono<Project> {

@@ -30,7 +30,7 @@ class ProjectHandler(private val service: ProjectService) {
                 ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(projects)
             }
             else {
-                ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(Mono.just(ArrayList<Project>()))
+                ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(Mono.just(ArrayList<ProjectData>()))
             }
         }
     }
